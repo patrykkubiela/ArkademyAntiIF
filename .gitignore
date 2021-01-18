@@ -33,11 +33,22 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+.vscode/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
+
+# Visual Studio 2015 cache/options directory
+
+# Code Coverage result files
+lcov.info
+coverage.json
+ApprovalTest.ThirtyDays.received.txt
+
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -75,6 +86,8 @@ StyleCopReport.xml
 *.pch
 *.pdb
 *.ipdb
+**/Properties/launchSettings.json
+*_i.h
 *.pgc
 *.pgd
 *.rsp
@@ -126,6 +139,9 @@ $tf/
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+
+# JustCode is a .NET coding add-in
+.JustCode
 
 # TeamCity is a build add-in
 _TeamCity*
@@ -192,6 +208,13 @@ PublishScripts/
 !**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/[Pp]ackages/repositories.config
+
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config
 # NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
@@ -218,6 +241,7 @@ _pkginfo.txt
 *.[Cc]ache
 # but keep track of directories ending in .cache
 !?*.[Cc]ache/
+!*.[Cc]ache/
 
 # Others
 ClientBin/
@@ -275,6 +299,9 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# Typescript v1 declaration files
+typings/
+
 # Visual Studio 6 build log
 *.plg
 
@@ -301,6 +328,12 @@ paket-files/
 
 # CodeRush personal settings
 .cr/personal
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# CodeRush
+.cr/
 
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
