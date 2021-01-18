@@ -2,7 +2,7 @@
 
 namespace csharp
 {
-    public static class GildedRoseExtensions
+    public static class ItemExtensions
     {
         public static int IncreaseQuality(this Item item)
         {
@@ -26,6 +26,21 @@ namespace csharp
         {
             return item.Quality < 50;
         }
+
+        public static bool IsBrieType(this Item item)
+        {
+            return item.Name == "Aged Brie";
+        }
+
+        public static bool IsBackstageType(this Item item)
+        {
+            return item.Name == "Backstage passes to a TAFKAL80ETC concert";
+        }
+
+        public static bool IsSulfurasType(this Item item)
+        {
+            return item.Name == "Sulfuras, Hand of Ragnaros";
+        }
     }
 
     public class GildedRose
@@ -40,11 +55,11 @@ namespace csharp
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                if (!Items[i].IsBrieType() && !Items[i].IsBackstageType())
                 {
                     if (Items[i].Quality > 0)
                     {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                        if (!Items[i].IsSulfurasType())
                         {
                             Items[i].DecreaseQuality();
                         }
@@ -56,7 +71,7 @@ namespace csharp
                     {
                         Items[i].IncreaseQuality();
 
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                        if (Items[i].IsBackstageType())
                         {
                             if (Items[i].SellIn < 11)
                             {
@@ -77,20 +92,20 @@ namespace csharp
                     }
                 }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                if (!Items[i].IsSulfurasType())
                 {
                     Items[i].DecreaseSellIn();
                 }
 
                 if (Items[i].SellIn < 0)
                 {
-                    if (Items[i].Name != "Aged Brie")
+                    if (!Items[i].IsBrieType())
                     {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                        if (!Items[i].IsBackstageType())
                         {
                             if (Items[i].Quality > 0)
                             {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                                if (!Items[i].IsSulfurasType())
                                 {
                                     Items[i].DecreaseQuality();
                                 }
