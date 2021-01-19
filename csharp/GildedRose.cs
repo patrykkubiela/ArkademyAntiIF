@@ -15,15 +15,9 @@ namespace csharp
             for (var i = 0; i < Items.Count; i++)
             {
                 if (Items[i].IsSulfurasType()) { }
-                else if (Items[i].IsGenericType())
+                else if (Items[i].IsGenericType() && Items[i].Quality > 0)
                 {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (!Items[i].IsSulfurasType())
-                        {
-                            Items[i].DecreaseQuality();
-                        }
-                    }
+                    Items[i].DecreaseQuality();
                 }
                 else
                 {
