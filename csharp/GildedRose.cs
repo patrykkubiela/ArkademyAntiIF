@@ -10,6 +10,28 @@ namespace csharp
             this.Items = Items;
         }
 
+        public void BackstageHandle(Item item)
+        {
+            if (item.IsBackstageType())
+            {
+                if (item.SellIn < 11)
+                {
+                    if (item.IsQualityLessThanMax())
+                    {
+                        item.IncreaseQuality();
+                    }
+                }
+
+                if (item.SellIn < 6)
+                {
+                    if (item.IsQualityLessThanMax())
+                    {
+                        item.IncreaseQuality();
+                    }
+                }
+            }
+        }
+
         public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
@@ -24,25 +46,7 @@ namespace csharp
                     if (Items[i].IsQualityLessThanMax())
                     {
                         Items[i].IncreaseQuality();
-
-                        if (Items[i].IsBackstageType())
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].IsQualityLessThanMax())
-                                {
-                                    Items[i].IncreaseQuality();
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].IsQualityLessThanMax())
-                                {
-                                    Items[i].IncreaseQuality();
-                                }
-                            }
-                        }
+                        BackstageHandle(Items[i]);
                     }
                 }
 
