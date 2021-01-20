@@ -12,8 +12,9 @@ namespace csharp
 
         public void BackstageHandle(Item item)
         {
-            if (item.IsBackstageType())
+            if (item.IsQualityLessThanMax())
             {
+                item.IncreaseQuality();
                 if (item.SellIn < 11)
                 {
                     if (item.IsQualityLessThanMax())
@@ -41,13 +42,16 @@ namespace csharp
                 {
                     Items[i].DecreaseQuality();
                 }
-                else
+                else if (Items[i].IsBrieType())
                 {
                     if (Items[i].IsQualityLessThanMax())
                     {
                         Items[i].IncreaseQuality();
-                        BackstageHandle(Items[i]);
                     }
+                }
+                else if (Items[i].IsBackstageType())
+                {
+                    BackstageHandle(Items[i]);
                 }
 
                 if (!Items[i].IsSulfurasType())
