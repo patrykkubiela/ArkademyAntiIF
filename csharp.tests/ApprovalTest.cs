@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Text;
-using ApprovalTests;
 using ApprovalTests.Reporters;
 
 namespace csharp.tests
