@@ -70,14 +70,12 @@ namespace csharp
                     {
                         _items[i].Quality = _items[i].Quality - _items[i].Quality;
                     }
-                    else
+                    else if (_items[i].IsSulfurasType()) { }
+                    else if (_items[i].IsGenericType())
                     {
                         if (_items[i].Quality > 0)
                         {
-                            if (!_items[i].IsSulfurasType())
-                            {
-                                _items[i].DecreaseQuality();
-                            }
+                            _items[i].DecreaseQuality();
                         }
                     }
                 }
