@@ -10,6 +10,24 @@ namespace csharp
             _items = items;
         }
 
+        public void GenericHandle(Item item)
+        {
+
+            if (item.Quality > 0)
+            {
+                item.DecreaseQuality();
+                item.DecreaseSellIn();
+
+                if (item.SellIn < 0)
+                {
+                    if (item.Quality > 0)
+                    {
+                        item.DecreaseQuality();
+                    }
+                }
+            }
+        }
+
         public void BackstageHandle(Item item)
         {
             if (item.IsQualityLessThanMax())
@@ -31,7 +49,30 @@ namespace csharp
                     }
                 }
             }
+
             item.DecreaseSellIn();
+
+            if (item.SellIn < 0)
+            {
+                item.Quality = item.Quality - item.Quality;
+            }
+        }
+
+        public void BrieHandle(Item item)
+        {
+            if (item.IsQualityLessThanMax())
+            {
+                item.IncreaseQuality();
+            }
+            item.DecreaseSellIn();
+
+            if (item.SellIn < 0)
+            {
+                if (item.IsQualityLessThanMax())
+                {
+                    item.IncreaseQuality();
+                }
+            }
         }
 
         public void UpdateQuality()
@@ -39,43 +80,17 @@ namespace csharp
             for (var i = 0; i < _items.Count; i++)
             {
                 if (_items[i].IsSulfurasType()) { }
-                else if (_items[i].IsGenericType() && _items[i].Quality > 0)
+                else if (_items[i].IsGenericType())
                 {
-                    _items[i].DecreaseQuality();
-                    _items[i].DecreaseSellIn();
-
-                    if (_items[i].SellIn < 0)
-                    {
-                        if (_items[i].Quality > 0)
-                        {
-                            _items[i].DecreaseQuality();
-                        }
-                    }
+                    GenericHandle(_items[i]);
                 }
                 else if (_items[i].IsBrieType())
                 {
-                    if (_items[i].IsQualityLessThanMax())
-                    {
-                        _items[i].IncreaseQuality();
-                    }
-                    _items[i].DecreaseSellIn();
-
-                    if (_items[i].SellIn < 0)
-                    {
-                        if (_items[i].IsQualityLessThanMax())
-                        {
-                            _items[i].IncreaseQuality();
-                        }
-                    }
+                    BrieHandle(_items[i]);
                 }
                 else if (_items[i].IsBackstageType())
                 {
                     BackstageHandle(_items[i]);
-
-                    if (_items[i].SellIn < 0)
-                    {
-                        _items[i].Quality = _items[i].Quality - _items[i].Quality;
-                    }
                 }
             }
         }
