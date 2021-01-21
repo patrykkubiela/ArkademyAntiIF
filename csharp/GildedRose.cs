@@ -43,6 +43,14 @@ namespace csharp
                 {
                     _items[i].DecreaseQuality();
                     _items[i].DecreaseSellIn();
+
+                    if (_items[i].SellIn < 0)
+                    {
+                        if (_items[i].Quality > 0)
+                        {
+                            _items[i].DecreaseQuality();
+                        }
+                    }
                 }
                 else if (_items[i].IsBrieType())
                 {
@@ -51,41 +59,22 @@ namespace csharp
                         _items[i].IncreaseQuality();
                     }
                     _items[i].DecreaseSellIn();
+
+                    if (_items[i].SellIn < 0)
+                    {
+                        if (_items[i].IsQualityLessThanMax())
+                        {
+                            _items[i].IncreaseQuality();
+                        }
+                    }
                 }
                 else if (_items[i].IsBackstageType())
                 {
                     BackstageHandle(_items[i]);
-                }
 
-                if (_items[i].SellIn < 0)
-                {
-                    if (_items[i].IsBrieType())
+                    if (_items[i].SellIn < 0)
                     {
-                        if (_items[i].SellIn < 0)
-                        {
-                            if (_items[i].IsQualityLessThanMax())
-                            {
-                                _items[i].IncreaseQuality();
-                            }
-                        }
-                    }
-                    else if (_items[i].IsBackstageType())
-                    {
-                        if (_items[i].SellIn < 0)
-                        {
-                            _items[i].Quality = _items[i].Quality - _items[i].Quality;
-                        }
-                    }
-                    else if (_items[i].IsSulfurasType()) { }
-                    else if (_items[i].IsGenericType())
-                    {
-                        if (_items[i].SellIn < 0)
-                        {
-                            if (_items[i].Quality > 0)
-                            {
-                                _items[i].DecreaseQuality();
-                            }
-                        }
+                        _items[i].Quality = _items[i].Quality - _items[i].Quality;
                     }
                 }
             }
