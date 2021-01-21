@@ -61,21 +61,30 @@ namespace csharp
                 {
                     if (_items[i].IsBrieType())
                     {
-                        if (_items[i].IsQualityLessThanMax())
+                        if (_items[i].SellIn < 0)
                         {
-                            _items[i].IncreaseQuality();
+                            if (_items[i].IsQualityLessThanMax())
+                            {
+                                _items[i].IncreaseQuality();
+                            }
                         }
                     }
                     else if (_items[i].IsBackstageType())
                     {
-                        _items[i].Quality = _items[i].Quality - _items[i].Quality;
+                        if (_items[i].SellIn < 0)
+                        {
+                            _items[i].Quality = _items[i].Quality - _items[i].Quality;
+                        }
                     }
                     else if (_items[i].IsSulfurasType()) { }
                     else if (_items[i].IsGenericType())
                     {
-                        if (_items[i].Quality > 0)
+                        if (_items[i].SellIn < 0)
                         {
-                            _items[i].DecreaseQuality();
+                            if (_items[i].Quality > 0)
+                            {
+                                _items[i].DecreaseQuality();
+                            }
                         }
                     }
                 }
