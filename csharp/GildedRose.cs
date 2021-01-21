@@ -4,10 +4,10 @@ namespace csharp
 {
     public class GildedRose
     {
-        IList<Item> Items;
-        public GildedRose(IList<Item> Items)
+        readonly IList<Item> _items;
+        public GildedRose(IList<Item> items)
         {
-            this.Items = Items;
+            _items = items;
         }
 
         public void BackstageHandle(Item item)
@@ -31,58 +31,53 @@ namespace csharp
                     }
                 }
             }
+            item.DecreaseSellIn();
         }
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            for (var i = 0; i < _items.Count; i++)
             {
-                if (Items[i].IsSulfurasType()) { }
-                else if (Items[i].IsGenericType() && Items[i].Quality > 0)
+                if (_items[i].IsSulfurasType()) { }
+                else if (_items[i].IsGenericType() && _items[i].Quality > 0)
                 {
-                    Items[i].DecreaseQuality();
+                    _items[i].DecreaseQuality();
+                    _items[i].DecreaseSellIn();
                 }
-                else if (Items[i].IsBrieType())
+                else if (_items[i].IsBrieType())
                 {
-                    if (Items[i].IsQualityLessThanMax())
+                    if (_items[i].IsQualityLessThanMax())
                     {
-                        Items[i].IncreaseQuality();
+                        _items[i].IncreaseQuality();
                     }
+                    _items[i].DecreaseSellIn();
                 }
-                else if (Items[i].IsBackstageType())
+                else if (_items[i].IsBackstageType())
                 {
-                    BackstageHandle(Items[i]);
-                }
-
-                if (!Items[i].IsSulfurasType())
-                {
-                    Items[i].DecreaseSellIn();
+                    BackstageHandle(_items[i]);
                 }
 
-                if (Items[i].SellIn < 0)
+                if (_items[i].SellIn < 0)
                 {
-                    if (!Items[i].IsBrieType())
+                    if (_items[i].IsBrieType())
                     {
-                        if (!Items[i].IsBackstageType())
+                        if (_items[i].IsQualityLessThanMax())
                         {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (!Items[i].IsSulfurasType())
-                                {
-                                    Items[i].DecreaseQuality();
-                                }
-                            }
+                            _items[i].IncreaseQuality();
                         }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                        }
+                    }
+                    else if (_items[i].IsBackstageType())
+                    {
+                        _items[i].Quality = _items[i].Quality - _items[i].Quality;
                     }
                     else
                     {
-                        if (Items[i].IsQualityLessThanMax())
+                        if (_items[i].Quality > 0)
                         {
-                            Items[i].IncreaseQuality();
+                            if (!_items[i].IsSulfurasType())
+                            {
+                                _items[i].DecreaseQuality();
+                            }
                         }
                     }
                 }
