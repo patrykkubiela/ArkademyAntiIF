@@ -20,65 +20,116 @@ namespace csharp
                 }
                 else if (_items[i].IsGenericType())
                 {
-                    if (_items[i].Quality > 0)
-                    {
-                        _items[i].Quality = --_items[i].Quality;
-                        _items[i].SellIn = --_items[i].SellIn;
-
-                        if (_items[i].SellIn < 0)
-                        {
-                            if (_items[i].Quality > 0)
-                            {
-                                _items[i].Quality = --_items[i].Quality;
-                            }
-                        }
-                    }
+                    var generic = new Generic(_items[i].Quality, _items[i].SellIn);
+                    generic.Update();
+                    _items[i].Quality = generic.Quality;
+                    _items[i].SellIn = generic.SellIn;
                 }
                 else if (_items[i].IsBrieType())
                 {
-                    if (_items[i].IsQualityLessThanMax())
-                    {
-                        _items[i].Quality = ++_items[i].Quality;
-                    }
-
-                    _items[i].SellIn = --_items[i].SellIn;
-
-                    if (_items[i].SellIn < 0)
-                    {
-                        if (_items[i].IsQualityLessThanMax())
-                        {
-                            _items[i].Quality = ++_items[i].Quality;
-                        }
-                    }
+                    var brie = new Brie(_items[i].Quality, _items[i].SellIn);
+                    brie.Update();
+                    _items[i].Quality = brie.Quality;
+                    _items[i].SellIn = brie.SellIn;
                 }
                 else if (_items[i].IsBackstageType())
                 {
-                    if (_items[i].IsQualityLessThanMax())
-                    {
-                        _items[i].Quality = ++_items[i].Quality;
-                        if (_items[i].SellIn < 11)
-                        {
-                            if (_items[i].IsQualityLessThanMax())
-                            {
-                                _items[i].Quality = ++_items[i].Quality;
-                            }
-                        }
+                    var backstage = new Backstage(_items[i].Quality, _items[i].SellIn);
+                    backstage.Update();
+                    _items[i].Quality = backstage.Quality;
+                    _items[i].SellIn = backstage.SellIn;
+                }
+            }
+        }
+    }
 
-                        if (_items[i].SellIn < 6)
-                        {
-                            if (_items[i].IsQualityLessThanMax())
-                            {
-                                _items[i].Quality = ++_items[i].Quality;
-                            }
-                        }
-                    }
+    public class Backstage
+    {
+        public int Quality;
+        public int SellIn;
 
-                    _items[i].SellIn = --_items[i].SellIn;
+        public Backstage(int quality, int sellIn)
+        {
+            Quality = quality;
+            SellIn = sellIn;
+        }
 
-                    if (_items[i].SellIn < 0)
-                    {
-                        _items[i].Quality = _items[i].Quality - _items[i].Quality;
-                    }
+        public void Update()
+        {
+            if (Quality < 50)
+            {
+                Quality = ++Quality;
+                if (SellIn < 11 && Quality < 50)
+                {
+                    Quality = ++Quality;
+                }
+
+                if (SellIn < 6 && Quality < 50)
+                {
+                    Quality = ++Quality;
+                }
+            }
+
+            SellIn = --SellIn;
+
+            if (SellIn < 0)
+            {
+                Quality = Quality - Quality;
+            }
+        }
+    }
+
+    public class Brie
+    {
+        public int Quality;
+        public int SellIn;
+
+        public Brie(int quality, int sellIn)
+        {
+            Quality = quality;
+            SellIn = sellIn;
+        }
+
+        public void Update()
+        {
+            if (Quality < 50)
+            {
+                Quality = ++Quality;
+            }
+
+            SellIn = --SellIn;
+
+            if (SellIn < 0)
+            {
+                if (Quality < 50)
+                {
+                    Quality = ++Quality;
+                }
+            }
+        }
+    }
+
+    public class Generic
+    {
+        public int SellIn;
+        public int Quality;
+
+        public Generic(int quality, int sellIn)
+        {
+            Quality = quality;
+            SellIn = sellIn;
+        }
+
+        public void Update()
+        {
+            if (Quality > 0)
+            {
+                Quality = --Quality;
+                SellIn = --SellIn;
+
+                if (SellIn < 0 && Quality > 0)
+                {
+                    Quality = --Quality;
                 }
             }
         }

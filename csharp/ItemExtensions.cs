@@ -2,12 +2,6 @@ namespace csharp
 {
     public static class ItemExtensions
     {
-
-        public static bool IsQualityLessThanMax(this Item item)
-        {
-            return item.Quality < 50;
-        }
-
         public static bool IsGenericType(this Item item)
         {
             return !item.IsBackstageType() && !item.IsBrieType() && !item.IsSulfurasType();
