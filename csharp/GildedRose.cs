@@ -17,6 +17,10 @@ namespace csharp
             {
                 if (_items[i].IsSulfurasType())
                 {
+                    var sulfuras = new Sulfuras(_items[i].Quality, _items[i].SellIn);
+                    sulfuras.Update();
+                    _items[i].Quality = sulfuras.Quality;
+                    _items[i].SellIn = sulfuras.SellIn;
                 }
                 else if (_items[i].IsGenericType())
                 {
@@ -40,6 +44,23 @@ namespace csharp
                     _items[i].SellIn = backstage.SellIn;
                 }
             }
+        }
+    }
+
+    public class Sulfuras
+    {
+        public int Quality;
+        public int SellIn;
+
+        public Sulfuras(int quality, int sellIn)
+        {
+            Quality = quality;
+            SellIn = sellIn;
+        }
+
+        public void Update()
+        {
+            
         }
     }
 
