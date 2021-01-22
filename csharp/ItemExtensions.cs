@@ -2,23 +2,6 @@ namespace csharp
 {
     public static class ItemExtensions
     {
-        public static int IncreaseQuality(this Item item)
-        {
-            item.Quality = ++item.Quality;
-            return item.Quality;
-        }
-
-        public static int DecreaseQuality(this Item item)
-        {
-            item.Quality = --item.Quality;
-            return item.Quality;
-        }
-
-        public static int DecreaseSellIn(this Item item)
-        {
-            item.SellIn = --item.SellIn;
-            return item.SellIn;
-        }
 
         public static bool IsQualityLessThanMax(this Item item)
         {
