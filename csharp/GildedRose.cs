@@ -2,6 +2,43 @@
 
 namespace csharp
 {
+    public class GoodCategory
+    {
+        public IGood BuildFor(Item item)
+        {
+            if (IsSulfurasType(item))
+                return new Sulfuras(item.Quality, item.SellIn);
+            else if (IsBrieType(item))
+                return new Brie(item.Quality, item.SellIn);
+            else if (IsBackstageType(item))
+                return new Backstage(item.Quality, item.SellIn);
+
+            return new Generic(item.Quality, item.SellIn);
+        }
+
+        private bool IsBrieType(Item item)
+        {
+            return item.Name == "Aged Brie";
+        }
+
+        private bool IsBackstageType(Item item)
+        {
+            return item.Name == "Backstage passes to a TAFKAL80ETC concert";
+        }
+
+        private bool IsSulfurasType(Item item)
+        {
+            return item.Name == "Sulfuras, Hand of Ragnaros";
+        }
+    }
+
+    public interface IGood
+    {
+        public int Quality { get; set; }
+        public int SellIn { get; set; }
+        public void Update();
+    }
+
     public class GildedRose
     {
         readonly IList<Item> _items;
@@ -15,59 +52,35 @@ namespace csharp
         {
             for (var i = 0; i < _items.Count; i++)
             {
-                if (_items[i].IsSulfurasType())
-                {
-                    var sulfuras = new Sulfuras(_items[i].Quality, _items[i].SellIn);
-                    sulfuras.Update();
-                    _items[i].Quality = sulfuras.Quality;
-                    _items[i].SellIn = sulfuras.SellIn;
-                }
-                else if (_items[i].IsGenericType())
-                {
-                    var generic = new Generic(_items[i].Quality, _items[i].SellIn);
-                    generic.Update();
-                    _items[i].Quality = generic.Quality;
-                    _items[i].SellIn = generic.SellIn;
-                }
-                else if (_items[i].IsBrieType())
-                {
-                    var brie = new Brie(_items[i].Quality, _items[i].SellIn);
-                    brie.Update();
-                    _items[i].Quality = brie.Quality;
-                    _items[i].SellIn = brie.SellIn;
-                }
-                else if (_items[i].IsBackstageType())
-                {
-                    var backstage = new Backstage(_items[i].Quality, _items[i].SellIn);
-                    backstage.Update();
-                    _items[i].Quality = backstage.Quality;
-                    _items[i].SellIn = backstage.SellIn;
-                }
+                var goodCategory = new GoodCategory();
+                var good = goodCategory.BuildFor(_items[i]);
+                good.Update();
+                _items[i].Quality = good.Quality;
+                _items[i].SellIn = good.SellIn;
             }
         }
     }
 
-    public class Sulfuras
+    public class Sulfuras : IGood
     {
-        public int Quality;
-        public int SellIn;
-
         public Sulfuras(int quality, int sellIn)
         {
             Quality = quality;
             SellIn = sellIn;
         }
 
+        public int Quality { get; set; }
+        public int SellIn { get; set; }
+
         public void Update()
         {
-            
         }
     }
 
-    public class Backstage
+    public class Backstage : IGood
     {
-        public int Quality;
-        public int SellIn;
+        public int Quality { get; set; }
+        public int SellIn { get; set; }
 
         public Backstage(int quality, int sellIn)
         {
@@ -100,10 +113,10 @@ namespace csharp
         }
     }
 
-    public class Brie
+    public class Brie : IGood
     {
-        public int Quality;
-        public int SellIn;
+        public int Quality { get; set; }
+        public int SellIn { get; set; }
 
         public Brie(int quality, int sellIn)
         {
@@ -130,10 +143,10 @@ namespace csharp
         }
     }
 
-    public class Generic
+    public class Generic : IGood
     {
-        public int SellIn;
-        public int Quality;
+        public int Quality { get; set; }
+        public int SellIn { get; set; }
 
         public Generic(int quality, int sellIn)
         {
