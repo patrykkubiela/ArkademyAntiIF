@@ -2,6 +2,38 @@
 
 namespace csharp
 {
+    public class Quality
+    {
+        public int Amount { get; set; }
+
+        public Quality(int amount)
+        {
+            Amount = amount;
+        }
+
+        public void Degrade()
+        {
+            if (Amount > 0)
+                Amount = --Amount;
+        }
+
+        public void Increase()
+        {
+            if (Amount < 50)
+                Amount = ++Amount;
+        }
+
+        public void Reset()
+        {
+            Amount = 0;
+        }
+
+        public bool LessThan50()
+        {
+            return Amount < 50;
+        }
+    }
+
     public class GoodCategory
     {
         public IGood BuildFor(Item item)
@@ -9,7 +41,7 @@ namespace csharp
             if (IsSulfurasType(item))
                 return new Sulfuras(item.Quality, item.SellIn);
             else if (IsBrieType(item))
-                return new Brie(item.Quality, item.SellIn);
+                return new AgedBrie(item.Quality, item.SellIn);
             else if (IsBackstageType(item))
                 return new Backstage(item.Quality, item.SellIn);
 
@@ -34,7 +66,7 @@ namespace csharp
 
     public interface IGood
     {
-        public int Quality { get; set; }
+        public int Quality { get; }
         public int SellIn { get; set; }
         public void Update();
     }
@@ -63,14 +95,16 @@ namespace csharp
 
     public class Sulfuras : IGood
     {
+        private Quality _quality;
+
+        public int Quality => _quality.Amount;
+        public int SellIn { get; set; }
+
         public Sulfuras(int quality, int sellIn)
         {
-            Quality = quality;
+            _quality = new Quality(quality);
             SellIn = sellIn;
         }
-
-        public int Quality { get; set; }
-        public int SellIn { get; set; }
 
         public void Update()
         {
@@ -79,28 +113,31 @@ namespace csharp
 
     public class Backstage : IGood
     {
-        public int Quality { get; set; }
+        private Quality _quality;
+
+        public int Quality => _quality.Amount;
         public int SellIn { get; set; }
 
         public Backstage(int quality, int sellIn)
         {
-            Quality = quality;
+            _quality = new Quality(quality);
             SellIn = sellIn;
         }
 
         public void Update()
         {
-            if (Quality < 50)
+            _quality.Increase();
+
+            if (_quality.LessThan50())
             {
-                Quality = ++Quality;
-                if (SellIn < 11 && Quality < 50)
+                if (SellIn < 11)
                 {
-                    Quality = ++Quality;
+                    _quality.Increase();
                 }
 
-                if (SellIn < 6 && Quality < 50)
+                if (SellIn < 6)
                 {
-                    Quality = ++Quality;
+                    _quality.Increase();
                 }
             }
 
@@ -108,63 +145,60 @@ namespace csharp
 
             if (SellIn < 0)
             {
-                Quality = Quality - Quality;
+                _quality.Reset();
             }
         }
     }
 
-    public class Brie : IGood
+    public class AgedBrie : IGood
     {
-        public int Quality { get; set; }
+        private Quality _quality;
+
+        public int Quality => _quality.Amount;
         public int SellIn { get; set; }
 
-        public Brie(int quality, int sellIn)
+        public AgedBrie(int quality, int sellIn)
         {
-            Quality = quality;
+            _quality = new Quality(quality);
             SellIn = sellIn;
         }
 
         public void Update()
         {
-            if (Quality < 50)
-            {
-                Quality = ++Quality;
-            }
+            _quality.Increase();
 
             SellIn = --SellIn;
 
             if (SellIn < 0)
             {
-                if (Quality < 50)
-                {
-                    Quality = ++Quality;
-                }
+                _quality.Increase();
             }
         }
     }
 
     public class Generic : IGood
     {
-        public int Quality { get; set; }
+        private Quality _quality;
+
+        public int Quality => _quality.Amount;
+
         public int SellIn { get; set; }
 
         public Generic(int quality, int sellIn)
         {
-            Quality = quality;
+            _quality = new Quality(quality);
             SellIn = sellIn;
         }
 
         public void Update()
         {
-            if (Quality > 0)
-            {
-                Quality = --Quality;
-                SellIn = --SellIn;
+            _quality.Degrade();
 
-                if (SellIn < 0 && Quality > 0)
-                {
-                    Quality = --Quality;
-                }
+            SellIn = --SellIn;
+
+            if (SellIn < 0)
+            {
+                _quality.Degrade();
             }
         }
     }
