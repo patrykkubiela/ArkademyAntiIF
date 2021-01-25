@@ -38,9 +38,7 @@ namespace csharp
     {
         public IGood BuildFor(Item item)
         {
-            if (IsSulfurasType(item))
-                return new Sulfuras(item.Quality, item.SellIn);
-            else if (IsBrieType(item))
+            if (IsBrieType(item))
                 return new AgedBrie(item.Quality, item.SellIn);
             else if (IsBackstageType(item))
                 return new Backstage(item.Quality, item.SellIn);
@@ -56,11 +54,6 @@ namespace csharp
         private bool IsBackstageType(Item item)
         {
             return item.Name == "Backstage passes to a TAFKAL80ETC concert";
-        }
-
-        private bool IsSulfurasType(Item item)
-        {
-            return item.Name == "Sulfuras, Hand of Ragnaros";
         }
     }
 
@@ -82,32 +75,22 @@ namespace csharp
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < _items.Count; i++)
+            foreach (var item in _items)
             {
+                if (IsSulfurasType(item)) continue;
+                
                 var goodCategory = new GoodCategory();
-                var good = goodCategory.BuildFor(_items[i]);
+                var good = goodCategory.BuildFor(item);
                 good.Update();
-                _items[i].Quality = good.Quality;
-                _items[i].SellIn = good.SellIn;
+                
+                item.Quality = good.Quality;
+                item.SellIn = good.SellIn;
             }
         }
-    }
-
-    public class Sulfuras : IGood
-    {
-        private Quality _quality;
-
-        public int Quality => _quality.Amount;
-        public int SellIn { get; set; }
-
-        public Sulfuras(int quality, int sellIn)
+        
+        private bool IsSulfurasType(Item item)
         {
-            _quality = new Quality(quality);
-            SellIn = sellIn;
-        }
-
-        public void Update()
-        {
+            return item.Name == "Sulfuras, Hand of Ragnaros";
         }
     }
 
