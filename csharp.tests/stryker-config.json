@@ -20,12 +20,12 @@
       "Backstage.cs",
       "Generic.cs",
       "GoodCategory.cs",
-      "Item.cs",
       "Quality.cs",
       "!Program.cs"
     ],
     "ignore-methods": [
       "*Log*",
+      "*ToString*",
       "*HashCode*"
     ]
   }
