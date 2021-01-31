@@ -16,6 +16,12 @@
     "mutation-level": "Standard",
     "mutate": [
       "GildedRose.cs",
+      "AgedBrie.cs",
+      "Backstage.cs",
+      "Generic.cs",
+      "GoodCategory.cs",
+      "Item.cs",
+      "Quality.cs",
       "!Program.cs"
     ],
     "ignore-methods": [
