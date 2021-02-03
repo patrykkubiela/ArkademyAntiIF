@@ -8,19 +8,15 @@ namespace csharp
 
         public int SellIn { get; set; }
 
-        public Generic(int quality, int sellIn)
+        public Generic(int quality)
         {
             _quality = new Quality(quality);
-            SellIn = sellIn;
         }
 
-        public void Update()
+        public void Update(int sellIn)
         {
             _quality.Degrade();
-
-            // SellIn = --SellIn;
-
-            if (SellIn < 0)
+            if (sellIn < 0)
             {
                 _quality.Degrade();
             }

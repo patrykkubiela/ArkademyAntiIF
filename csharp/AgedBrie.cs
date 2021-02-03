@@ -7,19 +7,15 @@ namespace csharp
         public int Quality => _quality.Amount;
         public int SellIn { get; set; }
 
-        public AgedBrie(int quality, int sellIn)
+        public AgedBrie(int quality)
         {
             _quality = new Quality(quality);
-            SellIn = sellIn;
         }
 
-        public void Update()
+        public void Update(int sellIn)
         {
             _quality.Increase();
-
-            // SellIn = --SellIn;
-
-            if (SellIn < 0)
+            if (sellIn < 0)
             {
                 _quality.Increase();
             }

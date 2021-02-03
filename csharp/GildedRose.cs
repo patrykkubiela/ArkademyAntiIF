@@ -6,7 +6,7 @@ namespace csharp
     {
         public int Quality { get; }
         public int SellIn { get; set; }
-        public void Update();
+        public void Update(int sellIn);
     }
 
     public class GildedRose
@@ -22,20 +22,15 @@ namespace csharp
         {
             foreach (var item in _items)
             {
-                if (IsSulfurasType(item)) continue;
+                if (item.Name == "Sulfuras, Hand of Ragnaros") continue;
 
                 item.SellIn -= 1;
                 var goodCategory = new GoodCategory();
                 var good = goodCategory.BuildFor(item);
-                good.Update();
+                good.Update(item.SellIn);
 
                 item.Quality = good.Quality;
             }
-        }
-
-        private bool IsSulfurasType(Item item)
-        {
-            return item.Name == "Sulfuras, Hand of Ragnaros";
         }
     }
 }

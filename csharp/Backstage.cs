@@ -7,21 +7,18 @@ namespace csharp
         public int Quality => _quality.Amount;
         public int SellIn { get; set; }
 
-        public Backstage(int quality, int sellIn)
+        public Backstage(int quality)
         {
             _quality = new Quality(quality);
-            SellIn = sellIn;
         }
 
-        public void Update()
+        public void Update(int sellIn)
         {
             _quality.Increase();
 
-            if (SellIn < 10)  _quality.Increase();
-
-            if (SellIn < 5) _quality.Increase();
-
-            if (SellIn < 0) _quality.Reset();
+            if (sellIn < 10)  _quality.Increase();
+            if (sellIn < 5) _quality.Increase();
+            if (sellIn < 0) _quality.Reset();
         }
     }
 }
