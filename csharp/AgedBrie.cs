@@ -16,6 +16,11 @@ namespace csharp
         {
             _quality.Increase();
         }
+
+        public static IGood Build(int quality, int sellIn)
+        {
+            return sellIn < 0 ? new Expired(quality) : new AgedBrie(quality);
+        }
         
         public class Expired :IGood
         {

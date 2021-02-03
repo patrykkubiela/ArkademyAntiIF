@@ -6,7 +6,7 @@ namespace csharp
         {
             switch (item.Name)
             {
-                case "Aged Brie": return new AgedBrie(item.Quality);
+                case "Aged Brie": return AgedBrie.Build(item.Quality, item.SellIn);
                 case "Backstage passes to a TAFKAL80ETC concert": return new Backstage(item.Quality);
                 default: return new Generic(item.Quality);
             }

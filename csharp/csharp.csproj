@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject>csharp.Program</StartupObject>
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
 
 </Project>
