@@ -6,7 +6,7 @@ namespace csharp
     {
         public int Quality { get; }
         public int SellIn { get; set; }
-        public void Update(int sellIn);
+        public void Update(int? sellIn = null);
     }
 
     public class GildedRose

@@ -12,7 +12,7 @@ namespace csharp
             _quality = new Quality(quality);
         }
 
-        public void Update(int sellIn)
+        public void Update(int? sellIn = null)
         {
             _quality.Increase();
 
