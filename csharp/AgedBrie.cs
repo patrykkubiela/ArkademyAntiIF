@@ -17,7 +17,7 @@ namespace csharp
         {
             _quality.Increase();
 
-            SellIn = --SellIn;
+            // SellIn = --SellIn;
 
             if (SellIn < 0)
             {

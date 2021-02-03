@@ -24,12 +24,12 @@ namespace csharp
             {
                 if (IsSulfurasType(item)) continue;
 
+                item.SellIn -= 1;
                 var goodCategory = new GoodCategory();
                 var good = goodCategory.BuildFor(item);
                 good.Update();
 
                 item.Quality = good.Quality;
-                item.SellIn = good.SellIn;
             }
         }
 

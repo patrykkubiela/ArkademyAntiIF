@@ -17,11 +17,9 @@ namespace csharp
         {
             _quality.Increase();
 
-            if (SellIn < 11)  _quality.Increase();
+            if (SellIn < 10)  _quality.Increase();
 
-            if (SellIn < 6) _quality.Increase();
-
-            SellIn = --SellIn;
+            if (SellIn < 5) _quality.Increase();
 
             if (SellIn < 0) _quality.Reset();
         }
