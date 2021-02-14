@@ -4,7 +4,6 @@ namespace csharp
 {
     public interface IGood
     {
-        public int Quality { get; }
         public int SellIn { get; set; }
         public void Update(int? sellIn = null);
     }
@@ -25,11 +24,12 @@ namespace csharp
                 if (item.Name == "Sulfuras, Hand of Ragnaros") continue;
 
                 item.SellIn -= 1;
+                var quality = new Quality(item.Quality);
                 var goodCategory = new GoodCategory();
-                var good = goodCategory.BuildFor(item);
+                var good = goodCategory.BuildFor(item, quality);
                 good.Update(item.SellIn);
 
-                item.Quality = good.Quality;
+                item.Quality = quality.Amount;
             }
         }
     }

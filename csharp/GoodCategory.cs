@@ -2,13 +2,13 @@ namespace csharp
 {
     public class GoodCategory
     {
-        public IGood BuildFor(Item item)
+        public IGood BuildFor(Item item, Quality quality)
         {
             switch (item.Name)
             {
-                case "Aged Brie": return AgedBrie.Build(item.Quality, item.SellIn);
-                case "Backstage passes to a TAFKAL80ETC concert": return new Backstage(item.Quality);
-                default: return new Generic(item.Quality);
+                case "Aged Brie": return AgedBrie.Build(quality, item.SellIn);
+                case "Backstage passes to a TAFKAL80ETC concert": return new Backstage(quality);
+                default: return new Generic(quality);
             }
         }
     }

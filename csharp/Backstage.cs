@@ -2,14 +2,12 @@ namespace csharp
 {
     public class Backstage : IGood
     {
-        private Quality _quality;
-
-        public int Quality => _quality.Amount;
+        private readonly Quality _quality;
         public int SellIn { get; set; }
 
-        public Backstage(int quality)
+        public Backstage(Quality quality)
         {
-            _quality = new Quality(quality);
+            _quality = quality;
         }
 
         public void Update(int? sellIn = null)

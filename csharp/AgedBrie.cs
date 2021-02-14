@@ -2,14 +2,12 @@ namespace csharp
 {
     public class AgedBrie : IGood
     {
-        private Quality _quality;
-
-        public int Quality => _quality.Amount;
+        private readonly Quality _quality;
         public int SellIn { get; set; }
 
-        public AgedBrie(int quality)
+        public AgedBrie(Quality quality)
         {
-            _quality = new Quality(quality);
+            _quality = quality;
         }
 
         public void Update(int? sellIn = null)
@@ -17,21 +15,19 @@ namespace csharp
             _quality.Increase();
         }
 
-        public static IGood Build(int quality, int sellIn)
+        public static IGood Build(Quality quality, int sellIn)
         {
             return sellIn < 0 ? new Expired(quality) : new AgedBrie(quality);
         }
-        
-        public class Expired :IGood
-        {
-            private Quality _quality;
 
-            public int Quality => _quality.Amount;
+        public class Expired : IGood
+        {
+            private readonly Quality _quality;
             public int SellIn { get; set; }
 
-            public Expired(int quality)
+            public Expired(Quality quality)
             {
-                _quality = new Quality(quality);
+                _quality = quality;
             }
 
             public void Update(int? sellIn = null)
