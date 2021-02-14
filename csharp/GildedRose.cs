@@ -5,7 +5,7 @@ namespace csharp
     public interface IGood
     {
         public int SellIn { get; set; }
-        public void Update(int? sellIn = null);
+        public void Update(Quality quality, int? sellIn = null);
     }
 
     public class GildedRose
@@ -27,7 +27,7 @@ namespace csharp
                 var quality = new Quality(item.Quality);
                 var goodCategory = new GoodCategory();
                 var good = goodCategory.BuildFor(item, quality);
-                good.Update(item.SellIn);
+                good.Update(quality, item.SellIn);
 
                 item.Quality = quality.Amount;
             }
