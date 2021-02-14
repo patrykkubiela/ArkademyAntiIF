@@ -7,8 +7,20 @@ namespace csharp
         public void Update(Quality quality, int? sellIn = null)
         {
             quality.Degrade();
-            if (sellIn < 0)
+        }
+        
+        public static IGood Build(Quality quality, int sellIn)
+        {
+            return sellIn < 0 ? new Expired() : new Generic();
+        }
+
+        public class Expired : IGood
+        {
+            public int SellIn { get; set; }
+
+            public void Update(Quality quality, int? sellIn = null)
             {
+                quality.Degrade();
                 quality.Degrade();
             }
         }
