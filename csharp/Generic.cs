@@ -4,12 +4,12 @@ namespace csharp
     {
         public int SellIn { get; set; }
 
-        public void Update(Quality quality, int? sellIn = null)
+        public void Update(Quality quality)
         {
             quality.Degrade();
         }
         
-        public static IGood Build(Quality quality, int sellIn)
+        public static IGood Build(int sellIn)
         {
             return sellIn < 0 ? new Expired() : new Generic();
         }
@@ -18,7 +18,7 @@ namespace csharp
         {
             public int SellIn { get; set; }
 
-            public void Update(Quality quality, int? sellIn = null)
+            public void Update(Quality quality)
             {
                 quality.Degrade();
                 quality.Degrade();

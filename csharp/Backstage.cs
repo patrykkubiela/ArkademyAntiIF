@@ -4,12 +4,12 @@ namespace csharp
     {
         public int SellIn { get; set; }
 
-        public void Update(Quality quality, int? sellIn = null)
+        public void Update(Quality quality)
         {
             quality.Increase();
         }
 
-        public static IGood Build(Quality quality, int sellIn)
+        public static IGood Build(int sellIn)
         {
             switch (sellIn)
             {
@@ -24,7 +24,7 @@ namespace csharp
         {
             public int SellIn { get; set; }
 
-            public void Update(Quality quality, int? sellIn = null)
+            public void Update(Quality quality)
             {
                 quality.Reset();
             }
@@ -34,7 +34,7 @@ namespace csharp
         {
             public int SellIn { get; set; }
 
-            public void Update(Quality quality, int? sellIn = null)
+            public void Update(Quality quality)
             {
                 quality.Increase();
                 quality.Increase();
@@ -46,7 +46,7 @@ namespace csharp
         {
             public int SellIn { get; set; }
 
-            public void Update(Quality quality, int? sellIn = null)
+            public void Update(Quality quality)
             {
                 quality.Increase();
                 quality.Increase();
