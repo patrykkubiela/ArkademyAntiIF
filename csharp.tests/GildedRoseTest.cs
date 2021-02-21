@@ -68,6 +68,36 @@ namespace csharp.tests
 
             Assert.Equal(expSellIn, items[0].SellIn);
         }
+        
+        [Theory]
+        [InlineData(48, 1, 49)]
+        [InlineData(45, 0, 49)]
+        [InlineData(0, 1, 0)]
+        [InlineData(0, 1, 1)]
+        [InlineData(0, 0, 3)]
+        public void Conjured_Quality_Quality(int expQuality, int givenSellIn, int givenQuality)
+        {
+            var items = new List<Item> {new Item {Name = "Conjured Mana Cake", SellIn = givenSellIn, Quality = givenQuality}};
+            var app = new GildedRose(items);
+            app.UpdateQuality();
+
+            Assert.Equal(expQuality, items[0].Quality);
+        }
+
+        [Theory]
+        [InlineData(0, 1, 49)]
+        [InlineData(-1, 0, 49)]
+        [InlineData(0, 1, 0)]
+        [InlineData(0, 1, 1)]
+        [InlineData(-1, 0, 3)]
+        public void Conjured_Quality_SellIn(int expSellIn, int givenSellIn, int givenQuality)
+        {
+            var items = new List<Item> {new Item {Name = "Conjured Mana Cake", SellIn = givenSellIn, Quality = givenQuality}};
+            var app = new GildedRose(items);
+            app.UpdateQuality();
+
+            Assert.Equal(expSellIn, items[0].SellIn);
+        }
 
         [Theory]
         [InlineData("test", 0, -1)]

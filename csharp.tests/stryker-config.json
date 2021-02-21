@@ -21,6 +21,7 @@
       "Generic.cs",
       "GoodCategory.cs",
       "Quality.cs",
+      "Conjured.cs",
       "!Program.cs"
     ],
     "ignore-methods": [
